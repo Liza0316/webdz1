@@ -1,0 +1,16 @@
+{% extends 'shop/layout.html' %}
+{% block title %}
+    Список категорій - Мій магазин
+{% endblock %}
+{% block content %}
+    <h1>Усі категорії товарів</h1>
+    {% if categories %}
+        <ul>
+            {% for category in categories %}
+                <li>{{ category.name }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Категорій ще не додано.</p>
+    {% endif %}
+{% endblock %}

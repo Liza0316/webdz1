@@ -1,13 +1,22 @@
-from django.http import HttpResponse
-from .models import Product
+from django.shortcuts import render 
+from .models import Product, Category 
+def product_list_view(request):
+    """ Ця функція відповідає за сторінку зі списком усіх товарів."""
 
-def index(request):
-    return HttpResponse("Вітаю! Це головна сторінка магазину.")
+    all_products = Product.objects.all()
+    context = {
+        'products': all_products,
+    }
+    
+    return render(request, 'shop/product_list.html', context)
 
-def product_list(request):
-    products = Product.objects.all()
-    if products.exists():
-        output = ", ".join([f"{p.name} ({p.price} грн, Категорія: {p.category.name})" for p in products])
-        return HttpResponse(f"Товари: {output}")
-    else:
-        return HttpResponse("Продуктів поки немає")
+def category_list_view(request):
+    """Ця функція відповідає за сторінку зі списком усіх категорій."""
+
+    all_categories = Category.objects.all()
+    
+    context = {
+        'categories': all_categories, 
+    }
+    
+    return render(request, 'shop/category_list.html', context)
