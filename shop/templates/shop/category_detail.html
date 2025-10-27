@@ -1,0 +1,20 @@
+{% extends 'shop/layout.html' %}
+{% block title %}Товари в категорії: {{ category.name }}{% endblock %}
+{% block content %}
+    <p><a href="{% url 'category-list' %}">&larr; До всіх категорій</a></p>
+    <h1>Товари в категорії: {{ category.name }}</h1>
+    {% if products %}
+        <ul>
+            {% for product in products %}
+                <li>
+                    <a href="{% url 'product-detail' product.slug %}">
+                        {{ product.name }}
+                    </a>
+                     - ({{ product.price }} грн)
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>В цій категорії товарів поки що немає.</p>
+    {% endif %}
+{% endblock %}

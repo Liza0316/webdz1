@@ -4,28 +4,65 @@
 {% endblock %}
 {% block content %}
     <h1>Усі товари</h1>
+    <div class="nav-links">
+        <a href="{% url 'product-create' %}">Додати новий товар</a>
+        <a href="{% url 'category-list' %}">Переглянути категорії</a>
+    </div>
     {% if products %}
         <table>
             <thead>
                 <tr>
+                    <th>Фото</th>
                     <th>Назва товару</th>
                     <th>Ціна</th>
                     <th>Опис</th>
                     <th>Категорія</th>
+                    <th>Дії</th>
                 </tr>
             </thead>
             <tbody>
                 {% for product in products %}
                     <tr>
-                        <td>{{ product.name }}</td>
+                        <td>
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-thumbnail">
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        
+                        <td>
+                            <a href="{% url 'product-detail' product.slug %}">{{ product.name }}</a>
+                        </td>
                         <td>{{ product.price }} грн</td>
                         <td>{{ product.description }}</td>
-                        <td>{{ product.category.name }}</td> 
-                    </tr>
+                        <td>{{ product.category.name|default:"-" }}</td> 
+                        
+                        <td>
+                            <a href="{% url 'product-update' product.slug %}" class="link-edit">Редагувати</a>
+                            |
+                            <a href="{% url 'product-delete' product.slug %}" class="link-delete">Видалити</a>
+                        </td>
+                        </tr>
                 {% endfor %}
             </tbody>
         </table>
     {% else %}
         <p>Товарів ще не додано.</p>
+    {% endif %}
+    {% if is_paginated %}
+      <div class="pagination">
+          <span class="step-links">
+              {% if page_obj.has_previous %}
+                  <a href="?page={{ page_obj.previous_page_number }}">Попередня</a>
+              {% endif %}
+              <span class="current">
+                  Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}.
+              </span>
+              {% if page_obj.has_next %}
+                  <a href="?page={{ page_obj.next_page_number }}">Наступна</a>
+              {% endif %}
+          </span>
+      </div>
     {% endif %}
 {% endblock %}

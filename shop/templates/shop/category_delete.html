@@ -1,0 +1,15 @@
+{% extends 'shop/layout.html' %}
+{% block title %}Видалення категорії{% endblock %}
+{% block content %}
+    <h1>Видалення категорії</h1>
+    <p>Ви впевнені, що хочете видалити категорію: <strong>{{ category.name }}</strong>?</p>   
+    <p class="delete-warning">
+        УВАГА: Всі товари в цій категорії ({{ category.products.count }} шт.) також будуть видалені!
+    </p>
+    <p>Цю дію неможливо буде скасувати.</p>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Так, видалити</button>
+        <a href="{% url 'category-list' %}">Скасувати</a>
+    </form>
+{% endblock %}

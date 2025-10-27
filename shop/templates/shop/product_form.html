@@ -1,0 +1,9 @@
+{% extends 'shop/layout.html' %}
+{% block title %}Додати новий товар{% endblock %}
+{% block content %}
+    <h1>Додати новий товар</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">Зберегти</button>
+    </form>
+{% endblock %}

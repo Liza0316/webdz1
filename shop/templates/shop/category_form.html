@@ -1,0 +1,9 @@
+{% extends 'shop/layout.html' %}
+{% block title %}Додати нову категорію{% endblock %}
+{% block content %}
+    <h1>Додати нову категорію</h1>
+    <form method="POST">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">Зберегти</button>
+    </form>
+{% endblock %}

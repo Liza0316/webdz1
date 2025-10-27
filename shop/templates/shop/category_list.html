@@ -4,13 +4,37 @@
 {% endblock %}
 {% block content %}
     <h1>Усі категорії товарів</h1>
+
+    <div class="nav-links">
+        <a href="{% url 'category-create' %}">Додати нову категорію</a>
+        <a href="{% url 'product-list' %}">Переглянути товари</a>
+    </div>
     {% if categories %}
         <ul>
             {% for category in categories %}
-                <li>{{ category.name }}</li>
-            {% endfor %}
+                <li>
+                    <a href="{% url 'category-detail' category.slug %}">{{ category.name }}</a>
+                    | <a href="{% url 'category-update' category.slug %}" class="link-edit">Редагувати</a>
+                    | <a href="{% url 'category-delete' category.slug %}" class="link-delete">Видалити</a>
+                </li>
+                {% endfor %}
         </ul>
     {% else %}
         <p>Категорій ще не додано.</p>
+    {% endif %}
+    {% if is_paginated %}
+      <div class="pagination">
+          <span class="step-links">
+              {% if page_obj.has_previous %}
+                  <a href="?page={{ page_obj.previous_page_number }}">Попередня</a>
+              {% endif %}
+              <span class="current">
+                  Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}.
+              </span>
+              {% if page_obj.has_next %}
+                  <a href="?page={{ page_obj.next_page_number }}">Наступна</a>
+              {% endif %}
+          </span>
+      </div>
     {% endif %}
 {% endblock %}
