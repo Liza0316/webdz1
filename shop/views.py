@@ -2,6 +2,7 @@ from django.views.generic import ListView
 from .models import Product, Category
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ProductForm, CategoryForm 
+from cart.forms import CartAddProductForm 
 from django.contrib.auth.decorators import login_required, permission_required 
 
 class ProductListView(ListView):
@@ -9,6 +10,10 @@ class ProductListView(ListView):
     template_name = 'shop/product_list.html'  
     context_object_name = 'products'  
     paginate_by = 5                     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cart_product_form'] = CartAddProductForm()
+        return context
 
 class CategoryListView(ListView):
     model = Category
@@ -38,11 +43,13 @@ def category_create_view(request):
         form = CategoryForm()
     return render(request, 'shop/category_form.html', {'form': form})
 
-
 def product_detail_view(request, slug): 
     product = get_object_or_404(Product, slug=slug) 
+    cart_product_form = CartAddProductForm() 
+
     context = {
-        'product': product
+        'product': product,
+        'cart_product_form': cart_product_form 
     }
     return render(request, 'shop/product_detail.html', context)
 

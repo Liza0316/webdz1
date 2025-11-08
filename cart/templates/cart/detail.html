@@ -1,0 +1,53 @@
+{% extends 'shop/layout.html' %} 
+{% block title %}Ваш кошик{% endblock %}
+{% block content %}
+    <h2>Ваш кошик</h2>
+    {% if not cart %}
+        <p>Ваш кошик порожній.</p>
+        <p><a href="{% url 'product-list' %}">Перейти до магазину</a></p>
+    {% else %}
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Товар</th>
+                    <th>Кількість</th>
+                    <th>Видалити</th>
+                    <th>Ціна за одиницю</th>
+                    <th>Загальна вартість</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                    {% with product=item.product %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'product-detail' slug=product.slug %}">{{ product.name }}</a>
+                            </td>
+                            <td>
+                                <form action="{% url 'cart:cart_add' product.id %}" method="post" class="update-form">
+                                    {{ item.update_quantity_form.quantity }}
+                                    {{ item.update_quantity_form.override }}
+                                    {% csrf_token %}
+                                    <input type="submit" value="Оновити">
+                                </form>
+                            </td>
+                            <td>
+                                <form action="{% url 'cart:cart_remove' product.id %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" value="Видалити">
+                                </form>
+                            </td>
+                            <td>{{ item.price }} UAH</td>
+                            <td>{{ item.total_price }} UAH</td>
+                        </tr>
+                    {% endwith %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Загальна вартість кошика: {{ cart.get_total_price }} UAH</h3>
+        <p>
+            <a href="{% url 'product-list' %}" class="button-link">Продовжити покупки</a>
+            <button class="button-checkout">Оформити замовлення</button>
+        </p>
+    {% endif %}
+{% endblock %}

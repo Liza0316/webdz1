@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'shop_copy.apps.ShopCopyConfig',
     'accounts.apps.AccountsConfig',
+    'cart',
 ]
 
 MIDDLEWARE = [
@@ -62,6 +63,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.cart',
             ],
         },
     },
@@ -129,3 +131,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.CustomUser'
 LOGIN_REDIRECT_URL = '/products/'
 LOGOUT_REDIRECT_URL = '/products/'
+
+CART_SESSION_ID = 'cart'

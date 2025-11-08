@@ -8,6 +8,7 @@ urlpatterns = [
     path('', include('shop.urls')),        
     path('copy/', include('shop_copy.urls')), 
     path('accounts/', include('accounts.urls')), 
+    path('cart/', include('cart.urls')),
 ]
 
 if settings.DEBUG:

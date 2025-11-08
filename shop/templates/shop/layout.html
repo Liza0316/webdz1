@@ -14,7 +14,7 @@
                 <span>
                     Привіт, <a href="{% url 'accounts:profile_edit' %}"><strong>{{ user.username }}</strong></a>!
                 </span>
-                    <form method="post" action="{% url 'accounts:logout' %}" style="display: inline; margin-left: 10px;">
+                <form method="post" action="{% url 'accounts:logout' %}" style="display: inline; margin-left: 10px;">
                     {% csrf_token %}
                     <button type="submit" class="link-button">Вийти</button>
                 </form>
@@ -22,16 +22,19 @@
                 <a href="{% url 'accounts:login' %}">Увійти</a>
                 <a href="{% url 'accounts:register' %}">Зареєструватися</a>
             {% endif %}
-        </nav>
-        </header>
-        {% if messages %}
+
+            <a href="{% url 'cart:cart_detail' %}" class="cart-link">
+                Кошик ({{ cart|length }})
+            </a>
+            </nav>
+    </header>
+    {% if messages %}
       <ul class="messages">
         {% for message in messages %}
           <li class="{{ message.tags }}">{{ message }}</li>
         {% endfor %}
       </ul>
     {% endif %}
-        <div class="container">
     <div class="container">
         {% block content %}
             <p>Завантаження вмісту...</p>
