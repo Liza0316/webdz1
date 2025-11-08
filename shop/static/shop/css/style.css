@@ -84,3 +84,30 @@ th {
     color: red;
     font-weight: bold;
 }
+.user-nav {
+  margin-top: -20px; 
+  padding: 10px;
+}
+.user-nav a {
+  color: #FFFFFF; 
+  margin-left: 10px;
+  text-decoration: none; 
+}
+.user-nav span {
+  color: #FFFFFF; 
+}
+.user-nav a:hover {
+  color: #b1b1b1; 
+}
+.link-button {
+    background: none;      
+    border: none;           
+    padding: 0;             
+    cursor: pointer;       
+    color: #FFFFFF;        
+    font-family: inherit;   
+    font-size: inherit;    
+}
+.link-button:hover {
+    color: #b1b1b1;       
+}

@@ -1,0 +1,13 @@
+{% extends 'shop/layout.html' %}
+{% block content %}
+  <h2>Редагування профілю: {{ user.username }}</h2>
+  <form method="post" enctype="multipart/form-data" style="margin-top: 20px;">
+    {% csrf_token %}
+    {% if user.avatar %}
+      <p>Поточний аватар:</p>
+      <img src="{{ user.avatar.url }}" alt="{{ user.username }} avatar" style="max-width: 150px; height: auto; border-radius: 8px; margin-bottom: 10px;">
+    {% endif %}
+    {{ form.as_p }}
+    <button type="submit">Зберегти зміни</button>
+  </form>
+{% endblock %}

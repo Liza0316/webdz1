@@ -2,19 +2,21 @@ from django.views.generic import ListView
 from .models import Product, Category
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ProductForm, CategoryForm 
+from django.contrib.auth.decorators import login_required, permission_required 
 
 class ProductListView(ListView):
     model = Product                 
     template_name = 'shop/product_list.html'  
     context_object_name = 'products'  
-    paginate_by = 5                 
+    paginate_by = 5                     
 
 class CategoryListView(ListView):
     model = Category
     template_name = 'shop/category_list.html'
     context_object_name = 'categories'
-    paginate_by = 10                
+    paginate_by = 10                        
 
+@permission_required('shop.add_product', raise_exception=True) 
 def product_create_view(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
@@ -25,6 +27,7 @@ def product_create_view(request):
         form = ProductForm()
     return render(request, 'shop/product_form.html', {'form': form})
 
+@permission_required('shop.add_category', raise_exception=True) 
 def category_create_view(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -34,6 +37,7 @@ def category_create_view(request):
     else:
         form = CategoryForm()
     return render(request, 'shop/category_form.html', {'form': form})
+
 
 def product_detail_view(request, slug): 
     product = get_object_or_404(Product, slug=slug) 
@@ -51,6 +55,7 @@ def category_detail_view(request, slug):
     }
     return render(request, 'shop/category_detail.html', context)
 
+@permission_required('shop.change_product', raise_exception=True) 
 def product_update_view(request, slug): 
     product = get_object_or_404(Product, slug=slug) 
     
@@ -63,6 +68,7 @@ def product_update_view(request, slug):
         form = ProductForm(instance=product)
     return render(request, 'shop/product_form.html', {'form': form})
 
+@permission_required('shop.change_category', raise_exception=True)
 def category_update_view(request, slug):
     category = get_object_or_404(Category, slug=slug) 
     
@@ -75,6 +81,7 @@ def category_update_view(request, slug):
         form = CategoryForm(instance=category)
     return render(request, 'shop/category_form.html', {'form': form})
 
+@permission_required('shop.delete_product', raise_exception=True) 
 def product_delete_view(request, slug):
     product = get_object_or_404(Product, slug=slug) 
     
@@ -86,6 +93,7 @@ def product_delete_view(request, slug):
     }
     return render(request, 'shop/product_delete.html', context)
 
+@permission_required('shop.delete_category', raise_exception=True) 
 def category_delete_view(request, slug): 
     category = get_object_or_404(Category, slug=slug) 
     

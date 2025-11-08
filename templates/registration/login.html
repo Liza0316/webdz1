@@ -1,0 +1,15 @@
+{% extends 'shop/layout.html' %}
+{% block content %}
+  <h2>Увійти на сайт</h2>
+  {% if form.errors %}
+    <p style="color: red;">Ім'я користувача або пароль невірні. Спробуйте ще раз.</p>
+  {% endif %}
+  <form method="post" style="margin-top: 20px;">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Увійти</button>
+  </form>
+  <p style="margin-top: 20px;">
+    Ще не маєте акаунту? <a href="{% url 'accounts:register' %}">Зареєструватися</a>
+  </p>
+{% endblock %}

@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -10,7 +9,29 @@
 <body>
     <header>
         <h1>Ласкаво просимо до мого магазину!</h1>
-    </header>
+        <nav class="user-nav">
+            {% if user.is_authenticated %}
+                <span>
+                    Привіт, <a href="{% url 'accounts:profile_edit' %}"><strong>{{ user.username }}</strong></a>!
+                </span>
+                    <form method="post" action="{% url 'accounts:logout' %}" style="display: inline; margin-left: 10px;">
+                    {% csrf_token %}
+                    <button type="submit" class="link-button">Вийти</button>
+                </form>
+            {% else %}
+                <a href="{% url 'accounts:login' %}">Увійти</a>
+                <a href="{% url 'accounts:register' %}">Зареєструватися</a>
+            {% endif %}
+        </nav>
+        </header>
+        {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+        <div class="container">
     <div class="container">
         {% block content %}
             <p>Завантаження вмісту...</p>
@@ -21,7 +42,5 @@
     </footer>
 </body>
 </html>
-
-
 
 

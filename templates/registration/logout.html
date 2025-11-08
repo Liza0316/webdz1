@@ -1,0 +1,6 @@
+{% extends 'shop/layout.html' %}
+{% block content %}
+  <h2>Ви вийшли з системи</h2>
+  <p>Дякуємо, що провели час на сайті!</p>
+  <p><a href="{% url 'accounts:login' %}">Увійти знову</a></p>
+{% endblock %}
