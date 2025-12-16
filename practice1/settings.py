@@ -114,6 +114,8 @@ LOGIN_REDIRECT_URL = '/products/'
 LOGOUT_REDIRECT_URL = '/products/'
 CART_SESSION_ID = 'cart'
 
-
-CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',')
+CSRF_TRUSTED_ORIGINS = os.environ.get(
+    'CSRF_TRUSTED_ORIGINS', 
+    'https://web-production-139a.up.railway.app,https://*.up.railway.app' 
+).split(',')
 # Тестую перезапуск Докера
