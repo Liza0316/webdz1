@@ -14,3 +14,7 @@ staticfiles/
 django_practice/
 venv/
 
+# Secrets
+.env
+*.env
+.env.*
