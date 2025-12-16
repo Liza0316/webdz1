@@ -12,6 +12,7 @@ ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 
 ENV PYTHONPATH="/usr/local/lib/python3.11/site-packages"
+
 RUN apt-get update && apt-get install -y \
     postgresql-client \
     build-essential \
@@ -26,7 +27,7 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app
 RUN /bin/bash -c "DJANGO_SETTINGS_MODULE=practice1.settings python -m django collectstatic --noinput"
-RUN DATABASE_URL=${DATABASE_URL} python manage.py migrate accounts --fake-initial --skip-checks --verbosity 0
-RUN DATABASE_URL=${DATABASE_URL} python manage.py migrate
 EXPOSE 8080
-CMD ["gunicorn", "practice1.wsgi:application", "--bind", "0.0.0.0:8080"]
+CMD python manage.py migrate accounts --fake-initial --skip-checks && \
+    python manage.py migrate --skip-checks && \
+    gunicorn practice1.wsgi:application --bind 0.0.0.0:8080
