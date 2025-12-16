@@ -1,5 +1,6 @@
 from pathlib import Path
 import os 
+import dj_database_url
 from dotenv import load_dotenv
 load_dotenv() 
 
@@ -60,17 +61,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'practice1.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('POSTGRES_DB'),
-        'USER': os.environ.get('POSTGRES_USER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': os.environ.get('POSTGRES_HOST'),
-        'PORT': os.environ.get('POSTGRES_PORT'),
-        'OPTIONS': {
-            'client_encoding': 'UTF8', 
-        }
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True 
+    )
 }
 
 AUTH_PASSWORD_VALIDATORS = [
