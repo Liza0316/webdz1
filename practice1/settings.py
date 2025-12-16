@@ -7,10 +7,11 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.environ.get('DEBUG') == 'True'
-ALLOWED_HOSTS = os.environ.get(
-    'ALLOWED_HOSTS', 
-    'localhost,127.0.0.1,web-production-139a.up.railway.app,.railway.app' 
-).split(',')
+# ALLOWED_HOSTS = os.environ.get(
+#     'ALLOWED_HOSTS', 
+#     'localhost,127.0.0.1,web-production-139a.up.railway.app,.railway.app' 
+# ).split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -113,9 +114,6 @@ LOGIN_REDIRECT_URL = '/products/'
 LOGOUT_REDIRECT_URL = '/products/'
 CART_SESSION_ID = 'cart'
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://web-production-139a.up.railway.app',
-    'https://*.up.railway.app', 
-]
 
+CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',')
 # Тестую перезапуск Докера
