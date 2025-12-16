@@ -10,6 +10,8 @@
 FROM python:3.11
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
+
+ENV PYTHONPATH="/usr/local/lib/python3.11/site-packages"
 RUN apt-get update && apt-get install -y \
     postgresql-client \
     build-essential \
@@ -17,6 +19,7 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     zlib1g-dev \
     --no-install-recommends && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 COPY requirements.txt /app/
 RUN pip install --upgrade pip
