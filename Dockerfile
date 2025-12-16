@@ -26,7 +26,6 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app
 RUN /bin/bash -c "DJANGO_SETTINGS_MODULE=practice1.settings python -m django collectstatic --noinput"
-RUN DJANGO_SETTINGS_MODULE=practice1.settings python manage.py migrate accounts --fake-initial
-RUN DJANGO_SETTINGS_MODULE=practice1.settings python manage.py migrate
+RUN DJANGO_SETTINGS_MODULE=practice1.settings python manage.py migrate --fake
 EXPOSE 8080
 CMD ["gunicorn", "practice1.wsgi:application", "--bind", "0.0.0.0:8080"]
