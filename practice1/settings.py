@@ -114,8 +114,8 @@ LOGOUT_REDIRECT_URL = '/products/'
 CART_SESSION_ID = 'cart'
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://' + os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')[0],
-    'https://web-production-06a97.up.railway.app', 
+    'https://web-production-139a.up.railway.app',
+    'https://*.up.railway.app', 
 ]
 
 # Тестую перезапуск Докера
