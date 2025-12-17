@@ -12,6 +12,7 @@ DEBUG = os.environ.get('DEBUG') == 'True'
 #     'localhost,127.0.0.1,web-production-139a.up.railway.app,.railway.app' 
 # ).split(',')
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
